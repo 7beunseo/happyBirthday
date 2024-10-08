@@ -34,7 +34,7 @@ jobs:
         run: ./gradlew build -x test
 
       - name: Upload artifact to S3  # S3에 빌드된 .jar 파일 업로드
-        run: aws s3 cp build/libs/*.jar s3://elasticbeanstalk-ap-northeast-2-992382842088/ --region ap-northeast-2
+        run: aws s3 cp build/libs/your-app.jar s3://elasticbeanstalk-ap-northeast-2-992382842088/your-app.jar --region ap-northeast-2
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -48,7 +48,7 @@ jobs:
           environment_name: "birthday-env-1"  # Elastic Beanstalk 환경 이름
           region: "ap-northeast-2"
           version_label: ${{ github.sha }}  # 버전 레이블로 커밋 SHA 사용
-          deployment_package: "s3://elasticbeanstalk-ap-northeast-2-992382842088/*.jar"  # S3 버킷에 업로드된 파일
+          deployment_package: "s3://elasticbeanstalk-ap-northeast-2-992382842088/your-app.jar"  # S3 버킷에 업로드된 파일
   
       - name: Clean up build files  # 빌드 후 불필요한 파일 정리
         run: ./gradlew clean
