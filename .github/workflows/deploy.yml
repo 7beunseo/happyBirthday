@@ -33,12 +33,12 @@ jobs:
       - name: Build with Gradle  # 애플리케이션 빌드
         run: ./gradlew build -x test
 
-      - name: Upload artifact  # 빌드된 .jar 파일을 아티팩트로 업로드
-        uses: actions/upload-artifact@v3
-        with:
-          name: happybirthday
-          path: build/libs/*.jar
-
+      - name: Upload artifact to S3  # S3에 빌드된 .jar 파일 업로드
+        run: aws s3 cp build/libs/*.jar s3://elasticbeanstalk-ap-northeast-2-992382842088/ --region ap-northeast-2
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  
       - name: Deploy to Elastic Beanstalk  # Elastic Beanstalk에 배포
         uses: einaregilsson/beanstalk-deploy@v20
         with:
@@ -46,9 +46,9 @@ jobs:
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           application_name: "birthday"  # Elastic Beanstalk 애플리케이션 이름
           environment_name: "birthday-env-1"  # Elastic Beanstalk 환경 이름
-          region: "ap-northeast-2"  # 예: us-east-1
+          region: "ap-northeast-2"
           version_label: ${{ github.sha }}  # 버전 레이블로 커밋 SHA 사용
-          artifact: build/libs/*.jar  # 배포할 .jar 파일
-
+          deployment_package: "s3://elasticbeanstalk-ap-northeast-2-992382842088/*.jar"  # S3 버킷에 업로드된 파일
+  
       - name: Clean up build files  # 빌드 후 불필요한 파일 정리
         run: ./gradlew clean
