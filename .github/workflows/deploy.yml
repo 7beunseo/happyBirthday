@@ -18,6 +18,10 @@ jobs:
         with:
           distribution: 'temurin'  # JDK 배포판을 설정 (temurin 또는 adopt 등)
           java-version: '17'
+
+      - name: Grant execute permission for Gradlew  # gradlew 파일에 실행 권한 부여
+        run: chmod +x ./gradlew
+
   
       - name: Cache Gradle packages  # Gradle 패키지 캐시 설정
         uses: actions/cache@v3
