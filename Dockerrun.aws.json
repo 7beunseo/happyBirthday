@@ -1,17 +1,13 @@
 {
-  "AWSEBDockerrunVersion": 1,
-  "containerDefinitions": [
+  "AWSEBDockerrunVersion": "1",
+  "Image": {
+    "Name": "992382842088.dkr.ecr.ap-northeast-2.amazonaws.com/happy:latest",
+    "Update": "true"
+  },
+  "Ports": [
     {
-      "name": "my-container",
-      "image": "992382842088.dkr.ecr.ap-northeast-2.amazonaws.com/happy:latest",
-      "memory": 128,
-      "essential": true,
-      "portMappings": [
-        {
-          "hostPort": 80,
-          "containerPort": 80
-        }
-      ]
+      "ContainerPort": "80"
     }
-  ]
+  ],
+  "Logging": "/var/log/nginx"
 }
