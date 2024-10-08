@@ -16,15 +16,16 @@ jobs:
       - name: Set up JDK 17  # JDK 설치
         uses: actions/setup-java@v3
         with:
+          distribution: 'temurin'  # JDK 배포판을 설정 (temurin 또는 adopt 등)
           java-version: '17'
-
+  
       - name: Cache Gradle packages  # Gradle 패키지 캐시 설정
         uses: actions/cache@v3
         with:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: ${{ runner.os }}-gradle
-
+  
       - name: Build with Gradle  # 애플리케이션 빌드
         run: ./gradlew build -x test
 
