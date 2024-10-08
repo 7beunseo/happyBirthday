@@ -34,9 +34,6 @@ jobs:
           docker build -f Dockerfile -t ${{ secrets.DOCKER_REPO }}/happybirthday .
           docker push ${{ secrets.DOCKER_REPO }}/happybirthday
 
-	# 기존에 실행되는 컨테이너 모두 멈춤 
-	# 서버에 접속하여 pull 한 후 실행 
-        # docker-comppose에 작성해둔 컨테이너 백그라운드로 실행
       - name: Deploy to server
         uses: appleboy/ssh-action@master
         id: deploy
