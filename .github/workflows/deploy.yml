@@ -32,9 +32,6 @@ jobs:
     - name: Build with Gradle  # 애플리케이션 빌드
       run: ./gradlew build -x test
 
-    - name: List build directory  # 빌드 디렉토리의 파일 나열
-      run: ls -la build/libs
-
     - name: Upload artifact to S3  # S3에 빌드된 .jar 파일 업로드
       run: aws s3 cp build/libs/happybirthday-0.0.1-SNAPSHOT.jar s3://howdoesitgoing/happybirthday-0.0.1-SNAPSHOT.jar --region ap-northeast-2
       env:
@@ -46,12 +43,12 @@ jobs:
       with:
         aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        application_name: "birthday"  # Elastic Beanstalk 애플리케이션 이름
-        environment_name: "birthday-env-1"  # Elastic Beanstalk 환경 이름
+        application_name: "birthday"
+        environment_name: "birthday-env-1"
         region: "ap-northeast-2"
-        version_label: ${{ github.sha }}  # 버전 레이블로 커밋 SHA 사용
-        existing_bucket_name: "howdoesitgoing"  # S3 버킷 이름
-        deployment_package: "happybirthday-0.0.1-SNAPSHOT.jar"  # S3에서의 정확한 객체 경로
+        version_label: ${{ github.sha }}
+        existing_bucket_name: "howdoesitgoing"
+        deployment_package: "happybirthday-0.0.1-SNAPSHOT.jar"  # 루트에 위치한 파일 참조
 
     - name: Clean up build files  # 빌드 후 불필요한 파일 정리
       run: ./gradlew clean
