@@ -13,12 +13,21 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
+    - name: Set up JDK 17
+      uses: actions/setup-java@v2
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+
+    - name: Build with Gradle
+      run: ./gradlew build
+
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v2
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ap-northeast-2  # AWS 리전
+        aws-region: ap-northeast-2
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
@@ -41,8 +50,8 @@ jobs:
       with:
         aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        application_name: <YOUR_BEANSTALK_APPLICATION_NAME>
-        environment_name: <YOUR_BEANSTALK_ENVIRONMENT_NAME>
+        application_name: birthday
+        environment_name: Birthday-env
         version_label: ${{ github.sha }}
         deployment_package: $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         region: ap-northeast-2
