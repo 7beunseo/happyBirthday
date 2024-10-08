@@ -50,7 +50,8 @@ jobs:
         environment_name: "birthday-env-1"  # Elastic Beanstalk 환경 이름
         region: "ap-northeast-2"
         version_label: ${{ github.sha }}  # 버전 레이블로 커밋 SHA 사용
-        deployment_package: "s3://howdoesitgoing/happybirthday-0.0.1-SNAPSHOT.jar"  # S3 버킷에 업로드된 파일
+        existing_bucket_name: "howdoesitgoing"  # S3 버킷 이름
+        deployment_package: "happybirthday-0.0.1-SNAPSHOT.jar"  # S3 객체 키 (파일 경로)
 
     - name: Clean up build files  # 빌드 후 불필요한 파일 정리
       run: ./gradlew clean
