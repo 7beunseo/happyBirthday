@@ -52,5 +52,6 @@ jobs:
         application_name: birthday
         environment_name: Birthday-env
         version_label: ${{ github.sha }}  # 커밋 SHA를 사용하여 버전 레이블 설정
-        deployment_package: 992382842088.dkr.ecr.ap-northeast-2.amazonaws.com/happy:latest  # ECR 이미지 경로
+        deployment_package: Dockerrun.aws.json  # Dockerrun.aws.json 파일 경로
         region: ap-northeast-2
+
