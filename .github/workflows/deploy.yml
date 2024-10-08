@@ -19,7 +19,6 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
-    # gradlew에 실행 권한을 부여
     - name: Grant execute permission for gradlew
       run: chmod +x ./gradlew
 
@@ -56,6 +55,6 @@ jobs:
         aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         application_name: birthday
         environment_name: Birthday-env
-        version_label: ${{ github.sha }}
-        deployment_package: $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        version_label: ${{ github.sha }}  # 버전을 커밋 SHA로 설정
+        deployment_package: ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
         region: ap-northeast-2
