@@ -6,7 +6,6 @@ on:
   pull_request:
     branches: [ "main" ]
 
-# github action이 읽을 수 있도록 수정 
 permissions:
   contents: read
 
